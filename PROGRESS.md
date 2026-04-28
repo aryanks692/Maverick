@@ -173,3 +173,129 @@
 
 -------------------------------------------------------------------------------------------------------------
 
+# 🚑 Omni-Triage – Progress Update (Checkpoint 4)
+
+
+---
+
+🖥️ **1. Frontend Emergency Interface**
+Developed a responsive web-based interface using React (Vite)
+
+Designed a clean UI for:
+
+* Voice input handling
+* Manual emergency selection
+* Real-time feedback display
+
+Structured layout to prioritize quick interaction during emergencies
+
+---
+
+🎤 **2. Voice-Based Detection Engine**
+Implemented speech-to-text based emergency phrase detection
+
+Recognizes critical keywords such as:
+
+* “not breathing”
+* “car accident”
+* “severe bleeding”
+
+Enables hands-free reporting for faster response in critical situations
+
+---
+
+🧠 **3. Smart Signal Mapping System**
+Built a rule-based keyword classification engine
+
+Mapped detected signals into emergency categories:
+
+* Breathing issues
+* Burns
+* Accidents
+* Fractures
+* Fire / smoke / collapse
+
+Forms the foundation for future severity scoring and triage logic
+
+---
+
+📍 **4. Real-Time Location Tracking**
+Integrated browser Geolocation API
+
+Captures:
+
+* Latitude
+* Longitude
+
+Ensures accurate location sharing during emergency reporting
+
+---
+
+🗺️ **5. Live Map Visualization**
+Integrated Leaflet + React-Leaflet for map rendering
+
+Displays:
+
+* User’s real-time position
+* Marker-based location visualization
+
+Provides spatial awareness for emergency situations
+
+---
+
+🖱️ **6. Manual Emergency Input Layer**
+Implemented fallback manual selection system
+
+Allows users to:
+
+* Select emergency type manually
+* Override or assist voice detection
+
+Improves reliability when voice recognition fails
+
+---
+
+⚙️ **7. System Architecture & Tech Stack**
+Frontend built using:
+
+* React (Vite)
+* JavaScript (ES6)
+* CSS
+* Leaflet (maps)
+* Lucide React (icons)
+
+Maintains modular and scalable structure for future backend integration
+
+---
+
+🔐 **8. Permissions & System Requirements**
+Requires user permissions for:
+
+* Microphone (voice detection)
+* Location (geolocation tracking)
+
+Ensures real-time data acquisition for emergency handling
+
+---
+
+🚀 **Key Achievements**
+
+* Built a fully functional frontend prototype
+* Enabled real-time voice + manual emergency reporting
+* Integrated live location tracking with map visualization
+* Established base for intelligent triage system
+
+---
+
+🔄 **In Progress / Next Steps**
+
+* Integrate AI-based speech recognition (Whisper / Deepgram)
+* Add backend connectivity (Node.js / Firebase)
+* Implement real-time alert system (SMS / APIs)
+* Introduce severity scoring & triage classification
+* Add multi-language support for wider accessibility
+
+-------------------------------------------------------------------------------------------------------------
+
+
+
