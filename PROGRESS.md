@@ -295,7 +295,133 @@ Ensures real-time data acquisition for emergency handling
 * Introduce severity scoring & triage classification
 * Add multi-language support for wider accessibility
 
+
+
 -------------------------------------------------------------------------------------------------------------
 
 
 
+# 🚑 Omni-Triage – Progress Update (Checkpoint 5)
+
+---
+
+## 🔗 1. Admin Dashboard Integration with Backend
+
+* Initiated and progressed integration of the **admin dashboard with Node.js backend APIs**
+
+* Replaced static/mock data with **live database-driven case data**
+
+* Implemented API-based data fetching for:
+
+  * Active cases
+  * Resource status
+  * Case updates
+
+---
+
+## 🗄️ 2. Database Connectivity & Synchronization
+
+* Strengthened integration with **MongoDB Atlas**
+
+* Ensured consistent storage and retrieval of:
+
+  * Case details
+  * Severity classifications
+  * Resource assignments
+
+* Improved:
+
+  * Data schema handling
+  * Query efficiency for real-time use
+  * Synchronization between frontend and database
+
+---
+
+## 🚑 3. Refinement of Resource Allocation Logic
+
+* Enhanced existing allocation system for better reliability
+
+* Improved handling of:
+
+  * Low-priority case assignment edge cases
+  * Resource availability checks
+  * Multi-case scenarios
+
+* Began refining logic for:
+
+  * Dynamic prioritization
+  * Smarter dispatch decisions
+
+---
+
+## 🔄 4. Case Lifecycle Handling Improvements
+
+* Worked on stabilizing case state transitions:
+
+  * **Pending → En Route → On-Site**
+
+* Improved:
+
+  * Trigger conditions for status updates
+  * Handling of edge cases (e.g., delayed updates, reassignment scenarios)
+
+---
+
+## 🗺️ 5. Real-Time Tracking Logic Enhancements
+
+* Improved ambulance movement simulation logic
+* Refined:
+
+  * ETA-based progress calculations
+  * Route interpolation behavior
+  * Synchronization between map visualization and backend state
+
+---
+
+## ⚙️ 6. System Debugging & Stability Improvements
+
+* Identified and addressed key issues:
+
+  * Status not updating correctly on arrival
+  * Inconsistencies in lower-priority case handling
+* Improved overall system robustness through iterative debugging
+
+---
+
+## 🧠 7. Architectural Consolidation
+
+* Transitioned from partially connected modules → **more unified system**
+* Strengthened interaction between:
+
+  * Dashboard (UI)
+  * Backend (logic)
+  * Database (state)
+
+---
+
+## 🚀 Key Achievements
+
+* Progressed from **simulation-based frontend → backend-connected system**
+* Established foundation for **real-time operational dashboard**
+* Improved **core system reliability and logic accuracy**
+* Advanced towards a **fully integrated emergency response platform**
+
+---
+
+## 🔄 In Progress / Next Steps
+
+* Complete full real-time synchronization (WebSockets)
+* Finalize dynamic resource reallocation system
+* Optimize performance for multiple simultaneous cases
+* Enhance UI feedback for status transitions
+* Deploy system for live testing
+
+---
+
+## 💡 Key Focus
+
+* System integration and stability
+* Accurate real-time state representation
+* Scalable and reliable emergency response logic
+
+---
