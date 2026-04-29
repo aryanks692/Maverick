@@ -1,5 +1,7 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
+app.use(cors());
 
 require("./db");
 
@@ -54,7 +56,9 @@ const SIGNAL_KEYWORDS = {
     "burn injuries",
     "on fire",
     "skin burned",
-    "burned badly"
+    "burned badly",
+    "burnt",
+    "burning"
   ],
   accident: [
     "car accident",
@@ -130,6 +134,7 @@ function getSeverity(score, signals) {
 
 // ================= MAIN API =================
 
+
 app.post("/report", async (req, res) => {
   try {
     const { input_mode, text = "", selected_signals = [], location = {} } = req.body;
@@ -204,10 +209,25 @@ app.post("/report", async (req, res) => {
       console.log("Initializing resources...");
 
       await Resource.insertMany([
-        { unit_id: "AMB_1", status: "available", current_case: null },
-        { unit_id: "AMB_2", status: "available", current_case: null },
-        { unit_id: "AMB_3", status: "available", current_case: null }
-      ]);
+  { 
+    unit_id: "AMB_1", 
+    status: "available", 
+    current_case: null,
+    location: { lat: 12.9716, lng: 77.5946 }
+  },
+  { 
+    unit_id: "AMB_2", 
+    status: "available", 
+    current_case: null,
+    location: { lat: 12.9616, lng: 77.5846 }
+  },
+  { 
+    unit_id: "AMB_3", 
+    status: "available", 
+    current_case: null,
+    location: { lat: 12.9816, lng: 77.6046 }
+  }
+]);
 
       dbResources = await Resource.find();
     }
@@ -218,75 +238,86 @@ app.post("/report", async (req, res) => {
       current_case: r.current_case || null
     }));
 
-    const result = assignResource(newCase, cleanResources, allCases);
+    const result = await assignResource(newCase, cleanResources, allCases);
+    console.log("ASSIGNMENT RESULT:", result);
 
     if (result) {
 
-      // 🔁 REALLOCATION
-      if (result.reassigned && result.previous_case) {
+  // 🔁 REALLOCATION
+  if (result.reassigned && result.previous_case) {
 
-        await Case.updateOne(
-          { case_id: result.previous_case.case_id },
-          {
-            status: "waiting",
-            assigned_unit: null,
-            reassigned: true
-          }
-        );
-
-        await Log.create({
-          event: "REALLOCATION",
-          case_id,
-          data: {
-            from_case: result.previous_case.case_id,
-            to_case: case_id,
-            unit_id: result.unit.unit_id
-          }
-        });
+    await Case.updateOne(
+      { case_id: result.previous_case.case_id },
+      {
+        status: "waiting",
+        assigned_unit: null,
+        reassigned: true
       }
+    );
 
-      // 🚑 ASSIGN NEW CASE
-      await Case.updateOne(
-        { case_id },
-        {
-          status: "assigned",
-          assigned_unit: result.unit.unit_id
-        }
-      );
+    await Log.create({
+      event: "REALLOCATION",
+      case_id,
+      data: {
+        from_case: result.previous_case.case_id,
+        to_case: case_id,
+        unit_id: result.unit.unit_id
+      }
+    });
+  }
 
-      // 🚑 UPDATE RESOURCE
-      await Resource.updateOne(
-        { unit_id: result.unit.unit_id },
-        {
-          current_case: case_id,
-          status: "assigned",
-          last_updated: new Date()
-        }
-      );
+  // 🚑 ASSIGN NEW CASE (🔥 FIX APPLIED HERE)
+  await Case.updateOne(
+    { case_id },
+    {
+      status: "assigned",
+      assigned_unit: result.unit.unit_id,
 
-      await Log.create({
-        event: "RESOURCE_ASSIGNED",
-        case_id,
-        data: {
-          unit_id: result.unit.unit_id
-        }
-      });
-
-    } else {
-      console.log("No resource available for:", case_id);
+      // 🔥 REQUIRED FOR MAP + MOVEMENT
+      routePath: result.routePath,
+      origin_lat: result.origin_lat,
+      origin_lng: result.origin_lng
     }
+  );
 
-    res.json({ message: "Case processed", case_id });
+  // 🚑 UPDATE RESOURCE
+  await Resource.updateOne(
+    { unit_id: result.unit.unit_id },
+    {
+      current_case: case_id,
+      status: "assigned",
+      last_updated: new Date()
+    }
+  );
+
+  await Log.create({
+    event: "RESOURCE_ASSIGNED",
+    case_id,
+    data: {
+      unit_id: result.unit.unit_id
+    }
+  });
+
+} else {
+  console.log("No resource available for:", case_id);
+}
+
+res.json({ message: "Case processed", case_id });
 
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
   }
-});
+}); // 🔥 CLOSE app.post("/report")
 
 // ================= GET CASES =================
 
 app.get("/cases", async (req, res) => {
-  const data = await Case.find();
+  const data = await Case.find().sort({ timestamp: -1 });
   res.json(data);
+});
+
+app.get("/logs", async (req, res) => {
+  const logs = await Log.find().sort({ _id: -1 }).limit(20);
+  res.json(logs);
 });

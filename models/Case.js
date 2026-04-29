@@ -5,7 +5,7 @@ const CaseSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now },
 
   severity: { type: String, enum: ["CRITICAL","HIGH","MEDIUM","LOW"] },
-  status: { type: String, enum: ["waiting","assigned"], default: "waiting" },
+  status: { type: String, enum: ["waiting","assigned","on_site","completed"], default: "waiting" },
 
   assigned_unit: { type: String, default: null },
   reassigned: { type: Boolean, default: false },
@@ -31,7 +31,24 @@ const CaseSchema = new mongoose.Schema({
     conscious: Boolean,
     breathing: String,
     trauma: Boolean
+  },
+
+  // 🔥🔥 ADD THESE (CRITICAL FIX)
+  routePath: {
+    type: [[Number]],
+    default: []
+  },
+
+  origin_lat: {
+    type: Number,
+    default: null
+  },
+
+  origin_lng: {
+    type: Number,
+    default: null
   }
+
 });
 
 module.exports = mongoose.model("Case", CaseSchema);
