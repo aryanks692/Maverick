@@ -416,9 +416,120 @@ Ensures real-time data acquisition for emergency handling
 * Enhance UI feedback for status transitions
 * Deploy system for live testing
 
+
+-------------------------------------------------------------------------------------------------------------
+
+🚑 **Omni-Triage – Progress Update (Checkpoint 6)**
+
 ---
 
-## 💡 Key Focus
+## ✅ Completed
+
+### 1. Backend Setup
+
+* Express.js server initialized
+* REST API endpoints created
+* Modular structure implemented (routes, models, logic separation)
+
+---
+
+### 2. Database & Resource Initialization
+
+* MongoDB connected and verified
+* Seed script created to initialize ambulances:
+
+  * AMB_1
+  * AMB_2
+  * AMB_3
+* Ensures immediate resource availability for dispatch simulation
+
+---
+
+### 3. Signal Processing & Input Handling
+
+* Keyword-based emergency signal extraction implemented
+* Fixed frontend action recognition (buttons now properly trigger backend signals like *Fire Nearby*, *Burns*, etc.)
+* Improved mapping between UI inputs and backend classification system
+
+---
+
+### 4. Severity Classification System
+
+* Defined 4-tier severity model:
+
+  * LOW
+  * MEDIUM
+  * HIGH
+  * CRITICAL
+* Added override rules for life-threatening cases (e.g., *not breathing*, *unconscious*)
+
+---
+
+### 5. Case Pipeline (End-to-End Flow)
+
+Input → Signal Extraction → Scoring → Severity Classification → Database Storage
+
+* Stores structured case data:
+
+  * Raw input
+  * Processed signals
+  * Decision logic output
+  * Confidence score
+
+---
+
+### 6. Resource Allocation System
+
+* Basic ambulance dispatch logic implemented
+* Auto-assigns nearest available unit for HIGH/CRITICAL cases
+* Supports multi-resource handling framework (extendable for fire/police units)
+
+---
+
+### 7. Logging & Audit System
+
+* Tracks system events:
+
+  * CASE_CREATED
+  * RESOURCE_ASSIGNED
+* Ensures traceability of every dispatch decision
+
+---
+
+### 8. Frontend–Backend Integration
+
+* Command Center dashboard connected to backend
+* Live polling every 3 seconds for real-time emergency updates
+* State lock implemented to prevent overwrite of manual dispatch actions
+
+---
+
+### 9. Simulation & Map System
+
+* Fixed coordinate mapping and marker freezing issues
+* Enabled smooth real-time vehicle movement on map
+* Implemented two-phase routing:
+
+  * Phase 1: Dispatch → Emergency site
+  * Phase 2: Emergency site → Nearest hospital/fire/police base
+
+---
+
+## 🔄 In Progress
+
+* Dynamic resource reallocation (priority-based updates)
+* Improving decision confidence scoring model
+* Enhancing routing optimization logic
+
+
+-------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
 
 * System integration and stability
 * Accurate real-time state representation
