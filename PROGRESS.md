@@ -419,7 +419,7 @@ Ensures real-time data acquisition for emergency handling
 
 -------------------------------------------------------------------------------------------------------------
 
-🚑 Omni-Triage – Progress Update (Checkpoint 6)
+# 🚑 Omni-Triage – Progress Update (Checkpoint 6)
 
 ---
 
